@@ -112,7 +112,7 @@ class GameMenu:
             self.time_show=self.AI_high_score[2][2]
             self.node_visited=self.AI_high_score[2][3]
         elif self.Show_score == "Hill Climbing":
-            self.Name_show=self.Show_score
+            self.Name_show= "Hill Climb"
             self.move_show=self.AI_high_score[3][0]
             self.turn_show= self.AI_high_score[3][1]
             self.time_show=self.AI_high_score[3][2]
