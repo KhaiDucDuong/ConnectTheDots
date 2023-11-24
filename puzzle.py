@@ -229,9 +229,34 @@ class BFS:
         if node.state is not None:
             self.solution.append(node.state)
 
+    def set_initial_connectionState(self):
+        dotStates = [False for i in range(len(self.dots_list))]
+        index = -1
+        for dotPair in self.dots_list:
+            dotColor = dotPair[2]
+            index += 1
+
+            #traverse to the end of the line
+            cur_pos = [pos for pos in dotPair[0]]
+            second_dot_pos = [pos for pos in dotPair[1]]
+            if (self.start_state[cur_pos[0] * self.size + cur_pos[1]].line_exit_direction == None):
+                cur_pos = [pos for pos in dotPair[1]]
+                second_dot_pos = [pos for pos in dotPair[0]]
+
+            while self.start_state[cur_pos[0] * self.size + cur_pos[1]].line_exit_direction != None:
+                row_offset, col_offset =  DirectionUtil.getMoveValue(self.start_state[cur_pos[0] * self.size + cur_pos[1]].line_exit_direction)
+                cur_pos[0] += row_offset
+                cur_pos[1] += col_offset
+
+            if (cur_pos[0] == second_dot_pos[0] and cur_pos[1] == second_dot_pos[1]):
+                dotStates[index] = True
+        
+        return dotStates
+
+
     def solve(self):
         #insert the root node in queue
-        initial_dots_state = [False for i in range(len(self.dots_list))]
+        initial_dots_state = self.set_initial_connectionState()
         initial_node = Node(self.start_state, None, initial_dots_state)
         queue = deque()
         queue.append(initial_node)
@@ -269,9 +294,33 @@ class DFS:
         if node.state is not None:
             self.solution.append(node.state)
 
+    def set_initial_connectionState(self):
+        dotStates = [False for i in range(len(self.dots_list))]
+        index = -1
+        for dotPair in self.dots_list:
+            dotColor = dotPair[2]
+            index += 1
+
+            #traverse to the end of the line
+            cur_pos = [pos for pos in dotPair[0]]
+            second_dot_pos = [pos for pos in dotPair[1]]
+            if (self.start_state[cur_pos[0] * self.size + cur_pos[1]].line_exit_direction == None):
+                cur_pos = [pos for pos in dotPair[1]]
+                second_dot_pos = [pos for pos in dotPair[0]]
+
+            while self.start_state[cur_pos[0] * self.size + cur_pos[1]].line_exit_direction != None:
+                row_offset, col_offset =  DirectionUtil.getMoveValue(self.start_state[cur_pos[0] * self.size + cur_pos[1]].line_exit_direction)
+                cur_pos[0] += row_offset
+                cur_pos[1] += col_offset
+
+            if (cur_pos[0] == second_dot_pos[0] and cur_pos[1] == second_dot_pos[1]):
+                dotStates[index] = True
+        
+        return dotStates
+    
     def solve(self):
         #insert the root node in queue
-        initial_dots_state = [False for i in range(len(self.dots_list))]
+        initial_dots_state = self.set_initial_connectionState()
         initial_node = Node(self.start_state, None, initial_dots_state)
         queue = deque()
         queue.append(initial_node)
@@ -309,9 +358,33 @@ class UCS:
         if node.state is not None:
             self.solution.append(node.state)
 
+    def set_initial_connectionState(self):
+        dotStates = [False for i in range(len(self.dots_list))]
+        index = -1
+        for dotPair in self.dots_list:
+            dotColor = dotPair[2]
+            index += 1
+
+            #traverse to the end of the line
+            cur_pos = [pos for pos in dotPair[0]]
+            second_dot_pos = [pos for pos in dotPair[1]]
+            if (self.start_state[cur_pos[0] * self.size + cur_pos[1]].line_exit_direction == None):
+                cur_pos = [pos for pos in dotPair[1]]
+                second_dot_pos = [pos for pos in dotPair[0]]
+
+            while self.start_state[cur_pos[0] * self.size + cur_pos[1]].line_exit_direction != None:
+                row_offset, col_offset =  DirectionUtil.getMoveValue(self.start_state[cur_pos[0] * self.size + cur_pos[1]].line_exit_direction)
+                cur_pos[0] += row_offset
+                cur_pos[1] += col_offset
+
+            if (cur_pos[0] == second_dot_pos[0] and cur_pos[1] == second_dot_pos[1]):
+                dotStates[index] = True
+        
+        return dotStates
+    
     def solve(self):
         #insert the root node in queue
-        initial_dots_state = [False for i in range(len(self.dots_list))]
+        initial_dots_state = self.set_initial_connectionState()
         initial_node = Node(self.start_state, None, initial_dots_state)
         initial_ucsnode= USC_node(0,initial_node)
         queue = PriorityQueue()
@@ -346,6 +419,30 @@ class A_star:
         if node.state is not None:
             self.solution.append(node.state)
 
+    def set_initial_connectionState(self):
+        dotStates = [False for i in range(len(self.dots_list))]
+        index = -1
+        for dotPair in self.dots_list:
+            dotColor = dotPair[2]
+            index += 1
+
+            #traverse to the end of the line
+            cur_pos = [pos for pos in dotPair[0]]
+            second_dot_pos = [pos for pos in dotPair[1]]
+            if (self.start_state[cur_pos[0] * self.size + cur_pos[1]].line_exit_direction == None):
+                cur_pos = [pos for pos in dotPair[1]]
+                second_dot_pos = [pos for pos in dotPair[0]]
+
+            while self.start_state[cur_pos[0] * self.size + cur_pos[1]].line_exit_direction != None:
+                row_offset, col_offset =  DirectionUtil.getMoveValue(self.start_state[cur_pos[0] * self.size + cur_pos[1]].line_exit_direction)
+                cur_pos[0] += row_offset
+                cur_pos[1] += col_offset
+
+            if (cur_pos[0] == second_dot_pos[0] and cur_pos[1] == second_dot_pos[1]):
+                dotStates[index] = True
+        
+        return dotStates
+    
     def get_heuristic(self, node: Node):
         h = 0
         for dots in self.dots_list:
@@ -366,7 +463,7 @@ class A_star:
 
     def solve(self):
         #insert the root node in queue
-        initial_dots_state = [False for i in range(len(self.dots_list))]
+        initial_dots_state = self.set_initial_connectionState()
         initial_node = Node(self.start_state, None, initial_dots_state)
         initial_Anode= Astar_node(0, 0, initial_node)
         initial_Anode.h_score = self.get_heuristic(initial_Anode)
@@ -402,6 +499,30 @@ class Hill_Climbing:
         if node.state is not None:
             self.solution.append(node.state)
 
+    def set_initial_connectionState(self):
+        dotStates = [False for i in range(len(self.dots_list))]
+        index = -1
+        for dotPair in self.dots_list:
+            dotColor = dotPair[2]
+            index += 1
+
+            #traverse to the end of the line
+            cur_pos = [pos for pos in dotPair[0]]
+            second_dot_pos = [pos for pos in dotPair[1]]
+            if (self.start_state[cur_pos[0] * self.size + cur_pos[1]].line_exit_direction == None):
+                cur_pos = [pos for pos in dotPair[1]]
+                second_dot_pos = [pos for pos in dotPair[0]]
+
+            while self.start_state[cur_pos[0] * self.size + cur_pos[1]].line_exit_direction != None:
+                row_offset, col_offset =  DirectionUtil.getMoveValue(self.start_state[cur_pos[0] * self.size + cur_pos[1]].line_exit_direction)
+                cur_pos[0] += row_offset
+                cur_pos[1] += col_offset
+
+            if (cur_pos[0] == second_dot_pos[0] and cur_pos[1] == second_dot_pos[1]):
+                dotStates[index] = True
+        
+        return dotStates
+    
     def get_heuristic(self, node: Node):
         h = 0
         for dots in self.dots_list:
@@ -422,7 +543,7 @@ class Hill_Climbing:
     
     def solve(self):
         #create a starting node
-        initial_dots_state = [False for i in range(len(self.dots_list))]
+        initial_dots_state = self.set_initial_connectionState()
         initial_node = Node(self.start_state, None, initial_dots_state)
         node = hill_node(self.get_heuristic(initial_node), initial_node)
 
